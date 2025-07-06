@@ -1,0 +1,37 @@
+package com.example.travel;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.*;
+
+@Path("/travel")
+@Produces(MediaType.APPLICATION_JSON)
+public class TravelResource {
+    private final String template;
+
+    public TravelResource(String template) {
+        this.template = template;
+    }
+
+    @GET
+    @Path("/hotels")
+    public List<Hotel> searchHotels(@QueryParam("location") String location,
+                                  @QueryParam("checkIn") String checkIn,
+                                  @QueryParam("checkOut") String checkOut) {
+        List<Hotel> hotels = new ArrayList<>();
+        hotels.add(new Hotel("Grand Hyatt", location, 4.5, 250.00));
+        hotels.add(new Hotel("Holiday Inn", location, 3.5, 120.00));
+        return hotels;
+    }
+
+    @GET
+    @Path("/cars")
+    public List<CarRental> searchCars(@QueryParam("location") String location,
+                                    @QueryParam("pickup") String pickup,
+                                    @QueryParam("dropoff") String dropoff) {
+        List<CarRental> cars = new ArrayList<>();
+        cars.add(new CarRental("Hertz", "Economy", 45.00));
+        cars.add(new CarRental("Avis", "SUV", 75.00));
+        return cars;
+    }
+}

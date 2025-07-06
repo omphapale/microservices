@@ -1,0 +1,20 @@
+package com.example.travel;
+
+import io.dropwizard.Application;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+
+public class TravelServiceApplication extends Application<TravelServiceConfiguration> {
+    public static void main(String[] args) throws Exception {
+        new TravelServiceApplication().run(args);
+    }
+
+    @Override
+    public void initialize(Bootstrap<TravelServiceConfiguration> bootstrap) {}
+
+    @Override
+    public void run(TravelServiceConfiguration config, Environment environment) {
+        environment.jersey().register(new TravelResource(config.getTemplate()));
+        environment.healthChecks().register("template", new TemplateHealthCheck(config.getTemplate()));
+    }
+}
